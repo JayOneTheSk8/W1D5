@@ -3,6 +3,8 @@ require_relative 'skeleton/lib/00_tree_node.rb'
 
 class KnightPathFinder
 
+  attr_reader :root_node
+
   DELTA = [
     [-1, -2],
     [1, 2],
@@ -23,8 +25,18 @@ class KnightPathFinder
   end
 
   def build_move_tree
-    start_pos = @root_node.value
-    new_move_positions(start_pos)
+    queue = [@root_node]
+
+    until queue.empty?
+      first = queue.shift
+      # queue.push *new_move_positions(first)
+      positions = new_move_positions(first.value)
+      children = positions.map { |coordinate| PolyTreeNode.new(coordinate) }
+      children.each { |child| first.add_child(child) }
+      queue += children
+    end
+
+    return @root_node
   end
 
   def find_path
@@ -33,7 +45,9 @@ class KnightPathFinder
 
   def new_move_positions(current_position) # returns coordinates we have not visited
     possibilities = KnightPathFinder.valid_moves(current_position)
-    possibilities.reject { |coordinates| @visited_positions.include?(coordinates) }
+    valid = possibilities.reject { |coordinates| @visited_positions.include?(coordinates) }
+    @visited_positions += valid
+    valid
   end
 
   def self.valid_moves(position) # moves that are possible on the board but not necessarily valid

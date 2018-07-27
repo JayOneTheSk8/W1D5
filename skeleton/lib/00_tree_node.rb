@@ -1,5 +1,4 @@
 class PolyTreeNode
-
   # attr_accessor :parent, :children, :value
   def initialize(value)
     @value = value
@@ -68,4 +67,5 @@ class PolyTreeNode
 
     return nil # self if queue.first.value == target_val
   end
+
 end
