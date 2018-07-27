@@ -39,8 +39,13 @@ class KnightPathFinder
     return @root_node
   end
 
-  def find_path
+  def find_path(end_pos)
+    # look for the final position in the tree (using dfs or bfs)
+    @root_node.bfs(end_pos)
+  end
 
+  def trace_path_back
+    # trace the path back to the root_node (parent)
   end
 
   def new_move_positions(current_position) # returns coordinates we have not visited
