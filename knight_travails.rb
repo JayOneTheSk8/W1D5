@@ -18,10 +18,13 @@ class KnightPathFinder
     @root_node = PolyTreeNode.new(position)
     @visited_positions = [position]
     build_move_tree
+    p "New Moves:"
+    p build_move_tree
   end
 
   def build_move_tree
-    
+    start_pos = @root_node.value
+    new_move_positions(start_pos)
   end
 
   def find_path
